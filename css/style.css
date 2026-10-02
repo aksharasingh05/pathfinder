@@ -32,3 +32,40 @@ button {
 #stats th {
   background: #f0f0f0;
 }
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(40, 22px);
+  gap: 1px;
+  justify-content: center;
+  margin: 20px auto;
+  user-select: none;
+}
+
+.cell {
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.wall {
+  background: #222;
+}
+.start {
+  background: #2ecc71;
+}
+.goal {
+  background: #e74c3c;
+}
+.visited {
+  background: #85c1e9;
+  transition: background 0.3s;
+}
+.path {
+  background: #f4d03f;
+}
+.mud {
+  background: #8b5a2b;
+}
