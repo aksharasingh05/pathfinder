@@ -1,1 +1,2 @@
-console.log("JS files are linked correctly");
+createGrid();
+console.log("Grid created:", ROWS, "x", COLS);
