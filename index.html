@@ -8,7 +8,46 @@
   </head>
   <body>
     <h1>Pathfinding Visualizer</h1>
-    <p>Setup works!</p>
+
+    <div id="controls">
+      <select id="algo">
+        <option value="astar">A*</option>
+        <option value="dijkstra">Dijkstra</option>
+        <option value="greedy">Greedy Best-First</option>
+        <option value="bfs">BFS</option>
+        <option value="dfs">DFS</option>
+      </select>
+
+      <select id="heuristic">
+        <option value="manhattan">Manhattan</option>
+        <option value="euclidean">Euclidean</option>
+        <option value="chebyshev">Diagonal</option>
+      </select>
+
+      <label
+        >Speed
+        <input type="range" id="speed" min="1" max="100" value="50" />
+      </label>
+
+      <button id="run">Visualize</button>
+      <button id="clearPath">Clear Path</button>
+      <button id="clearAll">Clear Board</button>
+      <button id="maze">Random Maze</button>
+    </div>
+
+    <div id="grid"></div>
+
+    <table id="stats">
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Nodes Explored</th>
+          <th>Path Length</th>
+          <th>Time (ms)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
     <script src="js/priorityQueue.js"></script>
     <script src="js/heuristics.js"></script>
