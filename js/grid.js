@@ -71,7 +71,8 @@ function setupMouse() {
   const el = document.getElementById("grid");
 
   el.addEventListener("mousedown", (e) => {
-    e.preventDefault(); // stops the browser's drag-selection
+    e.preventDefault();
+    if (animating) return;
     const n = nodeFromEvent(e);
     if (!n) return;
     mouseDown = true;
