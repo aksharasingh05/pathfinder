@@ -23,6 +23,31 @@ button {
   min-width: 500px;
 }
 
+#stats,
+#compareTable {
+  margin: 20px auto;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+#stats th,
+#stats td,
+#compareTable th,
+#compareTable td {
+  border: 1px solid #ccc;
+  padding: 8px 14px;
+}
+
+#stats th,
+#compareTable th {
+  background: #f0f0f0;
+}
+
+.best {
+  background: #d4efdf;
+  font-weight: bold;
+}
+
 #stats th,
 #stats td {
   border: 1px solid #ccc;

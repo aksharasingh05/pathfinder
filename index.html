@@ -33,17 +33,36 @@
       <button id="clearPath">Clear Path</button>
       <button id="clearAll">Clear Board</button>
       <button id="maze">Random Maze</button>
+      <button id="compare">Compare All</button>
+      <button id="clearStats">Clear Stats</button>
     </div>
 
     <div id="grid"></div>
 
+    <h2>Run History</h2>
     <table id="stats">
       <thead>
         <tr>
           <th>Algorithm</th>
           <th>Nodes Explored</th>
           <th>Path Length</th>
+          <th>Path Cost</th>
           <th>Time (ms)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Algorithm Comparison</h2>
+    <table id="compareTable">
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Nodes Explored</th>
+          <th>Path Length</th>
+          <th>Path Cost</th>
+          <th>Time (ms)</th>
+          <th>Optimal?</th>
         </tr>
       </thead>
       <tbody></tbody>
