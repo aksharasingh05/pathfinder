@@ -94,3 +94,9 @@ button {
 .mud {
   background: #8b5a2b;
 }
+.mud.visited {
+  background: #b08d57;
+}
+.mud.path {
+  background: #d4ac0d;
+}

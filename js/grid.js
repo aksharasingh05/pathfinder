@@ -40,7 +40,8 @@ function createGrid() {
 
 let mouseDown = false;
 let dragging = null; // 'start', 'goal', or null
-let drawMode = true; // true = adding walls, false = erasing walls
+let drawMode = true; // true = adding, false = erasing
+let paintMud = false; // decided when the mouse goes down
 
 function nodeFromEvent(e) {
   const div = e.target.closest(".cell");
@@ -49,13 +50,24 @@ function nodeFromEvent(e) {
 }
 
 function setWall(n, value) {
-  if (n === start || n === goal) return; // never wall the start or goal
+  if (n === start || n === goal) return;
   n.wall = value;
+  if (value) {
+    // a wall replaces any mud
+    n.weight = 1;
+    n.div.classList.remove("mud");
+  }
   n.div.classList.toggle("wall", value);
 }
 
+function setMud(n, value) {
+  if (n === start || n === goal || n.wall) return;
+  n.weight = value ? 5 : 1;
+  n.div.classList.toggle("mud", value);
+}
+
 function moveEndpoint(n) {
-  if (n.wall) return; // can't drop onto a wall
+  if (n.wall) return;
   if (dragging === "start" && n !== goal) {
     start.div.classList.remove("start");
     start = n;
@@ -76,19 +88,32 @@ function setupMouse() {
     const n = nodeFromEvent(e);
     if (!n) return;
     mouseDown = true;
+    paintMud = document.getElementById("mudMode").checked;
+
     if (n === start) dragging = "start";
     else if (n === goal) dragging = "goal";
-    else {
-      drawMode = !n.wall; // first cell decides: add or erase
+    else if (paintMud) {
+      drawMode = n.weight === 1; // first cell decides: add or remove mud
+      setMud(n, drawMode);
+    } else {
+      drawMode = !n.wall;
       setWall(n, drawMode);
     }
   });
 
   el.addEventListener("mouseover", (e) => {
-    if (!mouseDown) return;
     const n = nodeFromEvent(e);
     if (!n) return;
+
+    // Tooltip: show the values from the last run
+    const fmt = (v) => (v === Infinity ? "-" : +v.toFixed(1));
+    n.div.title =
+      `(${n.r}, ${n.c})  weight ${n.weight}\n` +
+      `g=${fmt(n.g)}  h=${fmt(n.h)}  f=${fmt(n.f)}`;
+
+    if (!mouseDown || animating) return;
     if (dragging) moveEndpoint(n);
+    else if (paintMud) setMud(n, drawMode);
     else setWall(n, drawMode);
   });
 

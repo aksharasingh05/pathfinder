@@ -6,7 +6,9 @@ let animating = false;
 function setBusy(busy) {
   animating = busy;
   document
-    .querySelectorAll("#controls button, #controls select")
+    .querySelectorAll(
+      "#controls button, #controls select, #controls input[type=checkbox]",
+    )
     .forEach((el) => (el.disabled = busy));
 }
 
@@ -92,8 +94,9 @@ function addStatsRow(label, result, ms) {
 }
 
 function timedRun(algo, heur) {
+  const diag = document.getElementById("diag").checked;
   const t0 = performance.now();
-  const result = runAlgorithm(algo, heur);
+  const result = runAlgorithm(algo, heur, diag);
   const ms = performance.now() - t0;
   return { result, ms };
 }
@@ -166,6 +169,20 @@ document.getElementById("clearStats").addEventListener("click", () => {
   document.querySelector("#stats tbody").innerHTML = "";
   document.querySelector("#compareTable tbody").innerHTML = "";
 });
+
+document.getElementById("clearPath").addEventListener("click", clearVisuals);
+
+document.getElementById("clearAll").addEventListener("click", () => {
+  clearVisuals();
+  createGrid();
+});
+
+document.getElementById("maze").addEventListener("click", () => {
+  if (animating) return;
+  clearVisuals();
+  generateRandomMaze();
+});
+
 /* ---------- Startup ---------- */
 
 createGrid();
