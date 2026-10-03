@@ -3,72 +3,138 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pathfinding Visualizer</title>
+    <title>Pathfinder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <h1>Pathfinding Visualizer</h1>
+    <header class="top">
+      <svg
+        class="logo"
+        viewBox="0 0 8 8"
+        width="44"
+        height="44"
+        shape-rendering="crispEdges"
+        aria-hidden="true"
+      >
+        <path
+          fill="#D8A2A2"
+          d="M1 0h2v1h2V0h2v1h1v3h-1v1h-1v1h-1v1h-2V6H3V5H2V4H1V3H0V1h1z"
+        />
+        <rect x="1" y="1" width="1" height="1" fill="#FFF9D6" />
+      </svg>
+      <div>
+        <h1>PATHFINDER</h1>
+        <p>bfs / dfs / dijkstra / greedy / a*</p>
+      </div>
+    </header>
 
-    <div id="controls">
-      <select id="algo">
-        <option value="astar">A*</option>
-        <option value="dijkstra">Dijkstra</option>
-        <option value="greedy">Greedy Best-First</option>
-        <option value="bfs">BFS</option>
-        <option value="dfs">DFS</option>
-      </select>
+    <main class="app">
+      <section class="card controls" id="controls">
+        <div class="group">
+          <label class="field"
+            >algorithm
+            <select id="algo">
+              <option value="astar">A*</option>
+              <option value="dijkstra">Dijkstra</option>
+              <option value="greedy">Greedy Best-First</option>
+              <option value="bfs">BFS</option>
+              <option value="dfs">DFS</option>
+            </select>
+          </label>
 
-      <select id="heuristic">
-        <option value="manhattan">Manhattan</option>
-        <option value="euclidean">Euclidean</option>
-        <option value="chebyshev">Diagonal</option>
-      </select>
+          <label class="field"
+            >heuristic
+            <select id="heuristic">
+              <option value="manhattan">Manhattan</option>
+              <option value="euclidean">Euclidean</option>
+              <option value="chebyshev">Diagonal</option>
+            </select>
+          </label>
 
-      <label
-        >Speed
-        <input type="range" id="speed" min="1" max="100" value="50" />
-      </label>
-      <label><input type="checkbox" id="diag" /> Diagonal</label>
-      <label><input type="checkbox" id="mudMode" /> Draw mud</label>
+          <label class="field"
+            >speed
+            <input type="range" id="speed" min="1" max="100" value="50" />
+          </label>
+        </div>
 
-      <button id="run">Visualize</button>
-      <button id="clearPath">Clear Path</button>
-      <button id="clearAll">Clear Board</button>
-      <button id="maze">Random Maze</button>
-      <button id="compare">Compare All</button>
-      <button id="clearStats">Clear Stats</button>
-    </div>
+        <div class="group">
+          <label class="check"
+            ><input type="checkbox" id="diag" /> diagonal</label
+          >
+          <label class="check"
+            ><input type="checkbox" id="mudMode" /> draw mud</label
+          >
+        </div>
 
-    <div id="grid"></div>
+        <div class="group">
+          <button id="run" class="primary">visualize</button>
+          <button id="compare">compare all</button>
+          <button id="clearPath">clear path</button>
+          <button id="clearAll">clear board</button>
+          <button id="maze">random maze</button>
+          <button id="clearStats">clear stats</button>
+        </div>
+      </section>
 
-    <h2>Run History</h2>
-    <table id="stats">
-      <thead>
-        <tr>
-          <th>Algorithm</th>
-          <th>Nodes Explored</th>
-          <th>Path Length</th>
-          <th>Path Cost</th>
-          <th>Time (ms)</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <section class="card board">
+        <div class="legend">
+          <span><i class="sw sw-end"></i>start / goal</span>
+          <span><i class="sw sw-wall"></i>wall</span>
+          <span><i class="sw sw-mud"></i>mud (cost 5)</span>
+          <span><i class="sw sw-visited"></i>explored</span>
+          <span><i class="sw sw-path"></i>path</span>
+          <span><i class="sw sw-empty"></i>empty</span>
+        </div>
+        <div id="grid"></div>
+      </section>
 
-    <h2>Algorithm Comparison</h2>
-    <table id="compareTable">
-      <thead>
-        <tr>
-          <th>Algorithm</th>
-          <th>Nodes Explored</th>
-          <th>Path Length</th>
-          <th>Path Cost</th>
-          <th>Time (ms)</th>
-          <th>Optimal?</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <section class="card">
+        <h2>RUN HISTORY</h2>
+        <div class="scroll">
+          <table id="stats">
+            <thead>
+              <tr>
+                <th>algorithm</th>
+                <th>nodes explored</th>
+                <th>path length</th>
+                <th>path cost</th>
+                <th>time (ms)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>COMPARISON</h2>
+        <div class="scroll">
+          <table id="compareTable">
+            <thead>
+              <tr>
+                <th>algorithm</th>
+                <th>nodes explored</th>
+                <th>path length</th>
+                <th>path cost</th>
+                <th>time (ms)</th>
+                <th>optimal?</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      built for AI and soft computing &middot; your name &middot; roll no.
+    </footer>
 
     <script src="js/priorityQueue.js"></script>
     <script src="js/heuristics.js"></script>
